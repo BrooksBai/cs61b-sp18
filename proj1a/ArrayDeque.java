@@ -4,8 +4,9 @@ public class ArrayDeque<T> {
     int nextFirst;
     int nextLast;
 
-
-    /** Creates an empty array deque. */
+    /**
+     * Creates an empty array deque.
+     */
     public ArrayDeque() {
         items = (T[]) new Object[8];
         size = 0;
@@ -13,20 +14,26 @@ public class ArrayDeque<T> {
         nextLast = 1;
     }
 
-    /** Creates a deep copy of other. */
+    /**
+     * Creates a deep copy of other.
+     */
     public ArrayDeque(ArrayDeque other) {
         items = (T[]) new Object[other.items.length];
         System.arraycopy(other.items, 0, items, 0, other.items.length);
     }
 
-    /** Resizes the underlying array to the target capacity. */
+    /**
+     * Resizes the underlying array to the target capacity.
+     */
     private void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
         System.arraycopy(items, 0, a, 0, size);
         items = a;
     }
 
-    /** Adds an item of type T to the front of the deque. */
+    /**
+     * Adds an item of type T to the front of the deque.
+     */
     public void addFirst(T item) {
         if (size == items.length) {
             resize(2 * size);
@@ -40,7 +47,9 @@ public class ArrayDeque<T> {
         size++;
     }
 
-    /** Adds an item of type T to the back of the deque. */
+    /**
+     * Adds an item of type T to the back of the deque.
+     */
     public void addLast(T item) {
         if (size == items.length) {
             resize(2 * size);
@@ -49,7 +58,10 @@ public class ArrayDeque<T> {
         nextLast = (nextLast + 1) % items.length;
     }
 
-    /** Removes and returns the item at the front of the deque. If no such item exists, returns null. */
+    /**
+     * Removes and returns the item at the front of the deque.
+     * If no such item exists, returns null.
+     */
     public T removeFirst() {
         nextFirst = (nextFirst + 1) % items.length;
         T item = items[nextFirst];
@@ -60,7 +72,10 @@ public class ArrayDeque<T> {
         return item;
     }
 
-    /** Removes and returns the item at the back of the deque. If no such item exists, returns null. */
+    /**
+     * Removes and returns the item at the back of the deque.
+     * If no such item exists, returns null.
+     */
     public T removeLast() {
         if (nextLast == 0) {
             nextLast = items.length - 1;
@@ -75,15 +90,39 @@ public class ArrayDeque<T> {
         return item;
     }
 
-    /** Returns the number of items in the deque. */
+    /**
+     * Returns true if deque is empty, false otherwise.
+     */
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    /**
+     * Returns the number of items in the deque.
+     */
     public int size() {
         return size;
     }
 
-    /** Gets the item at the given index.
-     *  If no such item exists, returns null. Must not alter the deque!
+    /**
+     * Gets the item at the given index.
+     * If no such item exists, returns null. Must not alter the deque!
      */
     public T get(int index) {
         return items[index];
+    }
+
+    /**
+     * Prints the items in the deque from first to last, separated by a space.
+     * Once all the items have been printed, print out a new line.
+     */
+    public void printDeque() {
+        int i = nextFirst + 1;
+        while (size > 0) {
+            System.out.print(items[i % items.length] + " ");
+            i++;
+            size--;
+        }
+        System.out.println();
     }
 }
