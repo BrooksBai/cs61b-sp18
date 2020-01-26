@@ -28,10 +28,8 @@ public class ArrayDeque<T> {
     private void resize(int capacity) {
         T[] temp = (T[]) new Object[capacity];
         int i = nextFirst + 1;
-        while (size > 0) {
+        for (int j = 0; j < size; i++, j++) {
             temp[i % temp.length] = items[i % items.length];
-
-            size--;
         }
         nextLast = (i + 1) % temp.length;
         items = temp;
@@ -74,6 +72,7 @@ public class ArrayDeque<T> {
         nextFirst = (nextFirst + 1) % items.length;
         T item = items[nextFirst];
         items[nextFirst] = null;
+        size--;
         if (size < items.length / 4 && items.length >= 16) {
             resize(items.length / 2);
         }
@@ -95,6 +94,7 @@ public class ArrayDeque<T> {
         }
         T item = items[nextLast];
         items[nextLast] = null;
+        size--;
         if (size < items.length / 4 && items.length >= 16) {
             resize(items.length / 2);
         }
@@ -120,6 +120,9 @@ public class ArrayDeque<T> {
      * If no such item exists, returns null. Must not alter the deque!
      */
     public T get(int index) {
+        if (index < 0 || index >= items.length) {
+            return null;
+        }
         return items[index];
     }
 
@@ -129,10 +132,8 @@ public class ArrayDeque<T> {
      */
     public void printDeque() {
         int i = nextFirst + 1;
-        while (size > 0) {
+        for (int j = 0; j < size; j++, i++) {
             System.out.print(items[i % items.length] + " ");
-            i++;
-            size--;
         }
         System.out.println();
     }
