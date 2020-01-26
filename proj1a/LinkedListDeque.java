@@ -41,7 +41,7 @@ public class LinkedListDeque<T> {
 //        }
 //        p2.next = sentinel;
 //        sentinel.prev = p2;
-    }
+//    }
 
     /** Adds an item of type T to the front of the deque. */
     public void addFirst(T item) {
