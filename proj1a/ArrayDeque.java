@@ -10,8 +10,8 @@ public class ArrayDeque<T> {
     public ArrayDeque() {
         items = (T[]) new Object[8];
         size = 0;
-        nextFirst = 0;  // just picked nextFirst and nextLast arbitrarily
-        nextLast = 1;
+        nextFirst = 3;  // just picked nextFirst and nextLast arbitrarily
+        nextLast = 4;
     }
 
     /**
