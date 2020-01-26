@@ -17,10 +17,10 @@ public class ArrayDeque<T> {
     /**
      * Creates a deep copy of other.
      */
-    public ArrayDeque(ArrayDeque other) {
-        items = (T[]) new Object[other.items.length];
-        System.arraycopy(other.items, 0, items, 0, other.items.length);
-    }
+//    public ArrayDeque(ArrayDeque other) {
+//        items = (T[]) new Object[other.items.length];
+//        System.arraycopy(other.items, 0, items, 0, other.items.length);
+//    }
 
     /**
      * Resizes the underlying array to the target capacity.
@@ -30,7 +30,7 @@ public class ArrayDeque<T> {
         int i = nextFirst + 1;
         while (size > 0) {
             temp[i % temp.length] = items[i % items.length];
-            i++;
+
             size--;
         }
         nextLast = (i + 1) % temp.length;
@@ -68,6 +68,9 @@ public class ArrayDeque<T> {
      * If no such item exists, returns null.
      */
     public T removeFirst() {
+        if (isEmpty()) {
+            return null;
+        }
         nextFirst = (nextFirst + 1) % items.length;
         T item = items[nextFirst];
         items[nextFirst] = null;
@@ -82,6 +85,9 @@ public class ArrayDeque<T> {
      * If no such item exists, returns null.
      */
     public T removeLast() {
+        if (isEmpty()) {
+            return null;
+        }
         if (nextLast == 0) {
             nextLast = items.length - 1;
         } else {
