@@ -1,8 +1,8 @@
 public class ArrayDeque<T> {
-    T[] items;
-    int size;
-    int nextFirst;
-    int nextLast;
+    private T[] items;
+    private int size;
+    private int nextFirst;
+    private int nextLast;
 
     /**
      * Creates an empty array deque.
@@ -10,7 +10,7 @@ public class ArrayDeque<T> {
     public ArrayDeque() {
         items = (T[]) new Object[8];
         size = 0;
-        nextFirst = 0;
+        nextFirst = 0;  // just picked nextFirst and nextLast arbitrarily
         nextLast = 1;
     }
 
@@ -26,9 +26,15 @@ public class ArrayDeque<T> {
      * Resizes the underlying array to the target capacity.
      */
     private void resize(int capacity) {
-        T[] a = (T[]) new Object[capacity];
-        System.arraycopy(items, 0, a, 0, size);
-        items = a;
+        T[] temp = (T[]) new Object[capacity];
+        int i = nextFirst + 1;
+        while (size > 0) {
+            temp[i % temp.length] = items[i % items.length];
+            i++;
+            size--;
+        }
+        nextLast = (i + 1) % temp.length;
+        items = temp;
     }
 
     /**
@@ -38,11 +44,9 @@ public class ArrayDeque<T> {
         if (size == items.length) {
             resize(2 * size);
         }
-        items[nextFirst] = item;
-        if (nextFirst == 0) {
+        items[nextFirst--] = item;
+        if (nextFirst < 0) {
             nextFirst = items.length - 1;
-        } else {
-            nextFirst -= 1;
         }
         size++;
     }
@@ -56,6 +60,7 @@ public class ArrayDeque<T> {
         }
         items[nextLast] = item;
         nextLast = (nextLast + 1) % items.length;
+        size++;
     }
 
     /**
@@ -80,7 +85,7 @@ public class ArrayDeque<T> {
         if (nextLast == 0) {
             nextLast = items.length - 1;
         } else {
-            nextLast -= 1;
+            nextLast--;
         }
         T item = items[nextLast];
         items[nextLast] = null;
